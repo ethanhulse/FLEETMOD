@@ -54,7 +54,7 @@ namespace FLEETMOD
             }
         }
     }
-    [HarmonyPatch(typeof(PLServer), "Start")]
+    [HarmonyPatch(typeof(PLGame), "Start")]
     internal class TriggerFleetmod
     {
         private static void Postfix()
@@ -80,7 +80,7 @@ namespace FLEETMOD
             }
             else if (PhotonNetwork.isMasterClient && MyVariables.isrunningmod)
             {
-                MyVariables.FleetmodPhoton.Add(sender.sender);
+                //MyVariables.FleetmodPhoton.Add(sender.sender);
                 ModMessage.SendRPC("Dragon+Mest.Fleetmod", "FLEETMOD.ActivateFleetmod", sender.sender, new object[] { });
             }
         }

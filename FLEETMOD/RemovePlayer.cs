@@ -26,7 +26,7 @@ namespace FLEETMOD
 					{
 						foreach (PLPlayer plplayer in PLServer.Instance.AllPlayers)
 						{
-							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer != inPlayer && plplayer.PlayerLifeTime > 10f && plplayer.GetClassID() != 0 && plplayer.GetPhotonPlayer().GetScore() == inPlayer.GetPhotonPlayer().GetScore() && !plplayer.IsBot)
+							if (plplayer != null && plplayer.GetPhotonPlayer() != null && plplayer != inPlayer && plplayer.PlayerLifeTime > 10f && plplayer.GetPlayerName(false).Contains("•") && plplayer.GetClassID() != 0 && plplayer.GetPhotonPlayer().GetScore() == inPlayer.GetPhotonPlayer().GetScore() && !plplayer.IsBot)
 							{
 								num++;
 								PLServer.Instance.photonView.RPC("SetPlayerAsClassID", PhotonTargets.All, new object[]
@@ -52,6 +52,11 @@ namespace FLEETMOD
 					}*/
 					PLServer.Instance.ClearPlayerData(inPlayer);
 					PLServer.Instance.AllPlayers.Remove(inPlayer);
+					MyVariables.survivalBonusDict.Remove(inPlayer.GetPlayerID());//Removing player from healthBonus dictonary on leave
+					if (MyVariables.UnModdedCrews.ContainsKey(inPlayer.GetPlayerID()))
+                    {
+						MyVariables.UnModdedCrews.Remove(inPlayer.GetPlayerID());
+					}
 					if (inPlayer.GetPawn() != null)
 					{
 						inPlayer.GetPawn().transform.parent = null;
